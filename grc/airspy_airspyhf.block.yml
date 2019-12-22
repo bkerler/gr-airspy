@@ -1,0 +1,45 @@
+id: airspy_airspyhf
+label: 'Airspy HF+'
+category: '[Airspy]'
+flags: [ throttle, python, cpp ]
+
+templates:
+  imports: import airspy
+  make: airspy.airspyhf(${serial_number}, ${samplerate}, ${frequency})
+
+# TODO: fix this
+cpp_templates:
+  includes: [ '#include <gnuradio/audio/source.h>' ]
+  declarations: 'audio::source::sptr ${id};'
+  make: 'this->${id} = audio::source::make(${samplerate}, ${device_name}, ${ok_to_block});'
+  link: ['gnuradio-audio']
+  translations:
+    "'": '"'
+    'True': 'true'
+    'False': 'false'
+
+parameters:
+- id: serial_number
+  label: Device Serial Number
+  dtype: string
+  default: ''
+- id: samplerate
+  label: Sample Rate
+  dtype: int
+  default: 768000
+  options: [768000, 384000, 192000, 96000, 48000]
+  option_labels: ['768 kHz', '384 kHz', '192 kHz', '96 kHz', '48 kHz']
+- id: frequency
+  label: Frequency
+  dtype: int
+  default: 7000000
+
+outputs:
+- domain: stream
+  dtype: complex
+
+documentation: 'Hello Airspy!'
+
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1
