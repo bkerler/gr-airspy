@@ -28,7 +28,7 @@ namespace gr {
 namespace airspy {
 
 /*!
- * \brief <+description of block+>
+ * \brief Airspy HF+ source block
  * \ingroup airspy
  *
  */
@@ -54,4 +54,3 @@ public:
 } // namespace gr
 
 #endif /* INCLUDED_AIRSPY_AIRSPYHF_H */
-

@@ -23,17 +23,14 @@
 #endif
 
 #include <gnuradio/io_signature.h>
+#include <boost/format.hpp>
+#include <gnuradio/prefs.h>
 #include "airspyhf_impl.h"
-
 #include <stdexcept>
 #include <cstring>
 
 namespace gr {
 namespace airspy {
-
-/*make(const std::string serial_number="",
-int samplerate=768000,
-int frequency=7000000);*/
 
 airspyhf::sptr
 airspyhf::make(const std::string serial_number, int samplerate, int frequency)
@@ -72,6 +69,29 @@ gr::sync_block("airspyhf",
     if(ret) {
         throw std::runtime_error("airspyhf_set_freq");
     }
+    
+    // Logging
+    // Borrowed from https://github.com/dl1ksv
+    prefs *p = prefs::singleton();
+    std::string config_file = p->get_string("LOG", "log_config", "");
+    std::string log_level = p->get_string("LOG", "log_level", "off");
+    std::string log_file = p->get_string("LOG", "log_file", "");
+    
+    GR_LOG_GETLOGGER(LOG, "gr_log." + alias());
+    GR_LOG_SET_LEVEL(LOG, log_level);
+    if(log_file.size() > 0) {
+        if(log_file == "stdout") {
+            GR_LOG_SET_CONSOLE_APPENDER(LOG, "cout","gr::log :%p: %c{1} - %m%n");
+        }
+        else if(log_file == "stderr") {
+            GR_LOG_SET_CONSOLE_APPENDER(LOG, "cerr","gr::log :%p: %c{1} - %m%n");
+        }
+        else {
+            GR_LOG_SET_FILE_APPENDER(LOG, log_file , true,"%r :%p: %c{1} - %m%n");
+        }
+    }
+
+    d_logger = LOG;
 }
 
 /*
@@ -88,8 +108,8 @@ int airspyhf_callback(airspyhf_transfer_t* transfer_fn) {
     std::unique_lock<std::mutex> lock(self->d_mutex);
     while (self->d_output_items == nullptr) self->d_work_ready.wait(lock);
     if (transfer_fn->dropped_samples) {
-        // TODO: fix log output
-        printf("dropped %d", transfer_fn->dropped_samples);
+        GR_LOG_INFO(self->d_logger,
+                    boost::format("dropped %1%") % transfer_fn->dropped_samples);
     }
     
     // Copy samples to GNURadio buffer
@@ -99,6 +119,7 @@ int airspyhf_callback(airspyhf_transfer_t* transfer_fn) {
     // Ok we are done, invalidate the buffer pointer and notify
     self->d_output_items = nullptr;
     self->d_callback_done.notify_one();
+    
     return 0; // anything else is an error
 }
 

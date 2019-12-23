@@ -85,7 +85,8 @@ ENDIF()
 ########################################################################
 # Install directories
 ########################################################################
-find_package(Gnuradio "3.9" REQUIRED)
+#find_package(Gnuradio "3.9" REQUIRED)
+find_package(Gnuradio REQUIRED)
 include(GrVersion)
 
 include(GrPlatform) #define LIB_SUFFIX
@@ -134,11 +135,11 @@ pkg_search_module(AIRSPYHF libairspyhf REQUIRED)
 ########################################################################
 # Setup doxygen option
 ########################################################################
-if(DOXYGEN_FOUND)
-    option(ENABLE_DOXYGEN "Build docs using Doxygen" ON)
-else(DOXYGEN_FOUND)
-    option(ENABLE_DOXYGEN "Build docs using Doxygen" OFF)
-endif(DOXYGEN_FOUND)
+#if(DOXYGEN_FOUND)
+#    option(ENABLE_DOXYGEN "Build docs using Doxygen" ON)
+#else(DOXYGEN_FOUND)
+#    option(ENABLE_DOXYGEN "Build docs using Doxygen" OFF)
+#endif(DOXYGEN_FOUND)
 
 ########################################################################
 # Create uninstall target

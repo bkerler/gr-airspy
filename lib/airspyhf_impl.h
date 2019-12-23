@@ -23,6 +23,7 @@
 
 #include <airspy/airspyhf.h>
 #include <libairspyhf/airspyhf.h>
+#include <gnuradio/logger.h>
 #include <mutex>
 #include <condition_variable>
 
@@ -44,18 +45,18 @@ private:
     
     int d_airspyhf_output_size;
     
+    gr::logger_ptr d_logger;
+    
 public:
     airspyhf_impl(const std::string serial_number, int samplerate, int frequency);
     ~airspyhf_impl();
     
     void set_freq(const uint32_t freq_hz);
-    
     void set_samplerate(const uint32_t samplerate);
-    uint32_t samplerate();
-    bool is_streaming();
 
-    int set_calibration();
-    int calibration();
+    //bool is_streaming();
+    //int set_calibration();
+    //int calibration();
     
     // TODO: implement some of these
     // airspyhf_lib_version
