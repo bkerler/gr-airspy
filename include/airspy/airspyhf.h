@@ -48,6 +48,22 @@ public:
     static sptr make(const std::string serial_number="",
                      int samplerate=768000,
                      int frequency=7000000);
+    
+    static std::vector<std::string> list_devices();
+    
+    virtual void set_freq(const uint32_t freq_hz) = 0;
+    virtual void set_samplerate(const uint32_t samplerate) = 0;
+    virtual std::vector<uint32_t> get_samplerates() = 0;
+    virtual bool is_streaming() = 0;
+    virtual void set_hf_agc(uint8_t flag) = 0;
+    virtual void set_hf_agc_threshold(uint8_t flag) = 0;
+    virtual void set_hf_att(uint8_t value) = 0;
+    virtual void set_hf_lna(uint8_t flag) = 0;
+    virtual void set_lib_dsp(uint8_t flag) = 0;
+    // TODO: fix this method
+    virtual void board_partid_serialno_read() = 0;
+    virtual std::string version_string_read() = 0;
+    
 };
 
 } // namespace airspy
