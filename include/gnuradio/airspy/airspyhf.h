@@ -21,7 +21,7 @@
 #ifndef INCLUDED_AIRSPY_AIRSPYHF_H
 #define INCLUDED_AIRSPY_AIRSPYHF_H
 
-#include <airspy/api.h>
+#include <gnuradio/airspy/api.h>
 #include <gnuradio/sync_block.h>
 
 namespace gr {
@@ -35,7 +35,7 @@ namespace airspy {
 class AIRSPY_API airspyhf : virtual public gr::sync_block
 {
 public:
-    typedef boost::shared_ptr<airspyhf> sptr;
+    typedef std::shared_ptr<airspyhf> sptr;
     
     /*!
      * \brief Return a shared_ptr to a new instance of airspy::airspyhf.

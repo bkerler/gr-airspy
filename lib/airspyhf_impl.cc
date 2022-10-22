@@ -82,9 +82,9 @@ gr::sync_block("airspyhf",
     std::string log_level = p->get_string("LOG", "log_level", "off");
     std::string log_file = p->get_string("LOG", "log_file", "");
     
-    GR_LOG_GETLOGGER(LOG, "gr_log." + alias());
-    GR_LOG_SET_LEVEL(LOG, log_level);
-    d_logger = LOG;
+    //GR_LOG_GETLOGGER(LOG, "gr_log." + alias());
+    //GR_LOG_SET_LEVEL(LOG, log_level);
+    //d_logger = LOG;
     
     /*if(log_file.size() > 0) {
         if(log_file == "stdout") {
