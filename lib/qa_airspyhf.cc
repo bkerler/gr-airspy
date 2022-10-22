@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#include <airspy/airspyhf.h>
+#include <gnuradio/airspy/airspyhf.h>
 #include <gnuradio/attributes.h>
 #include <boost/test/unit_test.hpp>
 

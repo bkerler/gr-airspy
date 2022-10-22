@@ -21,7 +21,7 @@
 #ifndef INCLUDED_AIRSPY_AIRSPYHF_IMPL_H
 #define INCLUDED_AIRSPY_AIRSPYHF_IMPL_H
 
-#include <airspy/airspyhf.h>
+#include <gnuradio/airspy/airspyhf.h>
 #include <libairspyhf/airspyhf.h>
 #include <gnuradio/logger.h>
 #include <mutex>

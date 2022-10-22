@@ -4,7 +4,7 @@ category: '[Airspy]'
 flags: [ throttle, python, cpp ]
 
 templates:
-  imports: import airspy
+  imports: import gnuradio.airspy as airspy
   make: airspy.airspyhf(${serial_number}, ${samplerate}, ${frequency})
 
 # TODO: fix this
