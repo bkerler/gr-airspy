@@ -100,8 +100,7 @@ gr::sync_block("airspyhf",
     
     airspyhf_lib_version_t ver;
     airspyhf_lib_version(&ver);
-    GR_LOG_INFO(d_logger,
-                boost::format("libairspyhf %d.%d.%d") % ver.major_version % ver.minor_version % ver.revision);
+    d_logger->info("libairspyhf {}.{}.{}",ver.major_version,ver.minor_version,ver.revision);
     
     // Open and configure device
     if(airspyhf_open(&d_device)) {
@@ -134,8 +133,7 @@ int airspyhf_callback(airspyhf_transfer_t* transfer_fn) {
     std::unique_lock<std::mutex> lock(self->d_mutex);
     while (self->d_output_items == nullptr) self->d_work_ready.wait(lock);
     if (transfer_fn->dropped_samples) {
-        GR_LOG_INFO(self->d_logger,
-                    boost::format("dropped %d") % transfer_fn->dropped_samples);
+        self->d_logger->info("dropped {}",transfer_fn->dropped_samples);
     }
     
     // Copy samples to GNURadio buffer
